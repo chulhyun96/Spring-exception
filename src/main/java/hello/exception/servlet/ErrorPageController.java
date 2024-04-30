@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
-@Controller
+/*@Controller*/
 public class ErrorPageController {
 
     //RequestDispatcher 상수로 정의되어 있음
