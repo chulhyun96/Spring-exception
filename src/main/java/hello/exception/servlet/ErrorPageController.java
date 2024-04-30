@@ -11,10 +11,11 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Slf4j
-/*@Controller*/
+@Controller
 public class ErrorPageController {
 
     //RequestDispatcher 상수로 정의되어 있음
@@ -39,18 +40,24 @@ public class ErrorPageController {
         return "error-page/500";
     }
 
+
     @RequestMapping(value = "/error-page/500", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> errorPage500Api(
             HttpServletRequest request, HttpServletResponse response) {
 
         log.info("API errorPage 500");
-
-        Map<String, Object> result = new HashMap<>();
+        //RuntimeException 에러 발생시 ErrorPageController에서 지정한 /error-page/500 경로로 sendError
+        Map<String, Object> result = new LinkedHashMap<>();
+        //sendError 호출 시의 예외 정보를 담고있음. ex == RuntimeException
         Exception ex = (Exception) request.getAttribute(ERROR_EXCEPTION);
+        //status = 500
         result.put("status", request.getAttribute(ERROR_STATUS_CODE));
+        // message = 잘못된 사용자 입니다.
         result.put("message", ex.getMessage());
 
+        // 500 = statusCode
         Integer statusCode = (Integer) request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+
         return new ResponseEntity<>(result, HttpStatus.valueOf(statusCode));
     }
 
