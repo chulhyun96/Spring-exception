@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
+@BadReqEx
 @RestController
 public class ApiExceptionController {
     @Data
@@ -21,7 +22,6 @@ public class ApiExceptionController {
         private String name;
     }
 
-    @BadReqEx
     @GetMapping("/api/members/{id}")
     public MemberDto getMember(@PathVariable String id) {
         if (id.equals("ex"))

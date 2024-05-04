@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" th:with="timestamp=${timestamp}, exception=${exception}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -10,13 +10,10 @@
 <body>
     <h1>404 오류입니다</h1>
 
-    <li th:text="|timestamp: ${timestamp}|"></li>
-    <li th:text="|path: ${path}|"></li>
-    <li th:text="|status: ${status}|"></li>
-    <li th:text="|message: ${message}|"></li>
-    <li th:text="|error: ${error}|"></li>
-    <li th:text="|exception: ${exception}|"></li>
-    <li th:text="|errors: ${errors}|"></li>
-    <li th:text="|trace: ${trace}|"></li>
+    <ul>
+        <li th:text="'ERROR CODE: ' + ${error}"></li>
+        <li th:text="'MESSAGE: ' + ${message}"></li>
+        <li th:text="'개발자의 한마디 : ' + ${text}"></li>
+    </ul>
 </body>
 </html>
