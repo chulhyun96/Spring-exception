@@ -7,9 +7,11 @@ import hello.exception.exhandler.ErrorResult;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 @Slf4j
 @BadReqEx
@@ -23,7 +25,7 @@ public class ApiExceptionController {
     }
 
     @GetMapping("/api/members/{id}")
-    public MemberDto getMember(@PathVariable String id) {
+    public MemberDto getMember(@PathVariable String id) throws NoHandlerFoundException {
         if (id.equals("ex"))
             throw new RuntimeException("잘못된 사용자");
 
@@ -32,6 +34,9 @@ public class ApiExceptionController {
 
         if (id.equals("user-ex"))
             throw new UserException("사용자 오류임니당~!!");
+        if (id.equals("not")) {
+            throw new NoHandlerFoundException("GetMapping", "not", HttpHeaders.EMPTY);
+        }
 
         return new MemberDto(id, "hello" + id);
     }
